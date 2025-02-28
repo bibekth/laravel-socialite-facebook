@@ -12,9 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('build/assets/app-DqME6eCz.css') }}">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 <body>
     <div id="app">
@@ -77,4 +77,5 @@
         </main>
     </div>
 </body>
+<script src="{{ asset('build/assets/app-D4nMHFhB.js') }}"></script>
 </html>
