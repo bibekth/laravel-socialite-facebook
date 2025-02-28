@@ -21,6 +21,7 @@ class LoginController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
+            Log::info("User: ".$user);
             $newUser = User::firstOrCreate(
                 ['email' => $user->getEmail()],
                 ['name' => $user->getName(), 'password' => Hash::make(Str::random(12))]
