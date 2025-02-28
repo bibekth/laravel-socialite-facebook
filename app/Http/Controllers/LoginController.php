@@ -13,5 +13,10 @@ class LoginController extends Controller
 
     public function redirect(){
         $user = Socialite::driver('facebook')->user();
+        dd($user);
+    }
+
+    public function privacyPolicy(){
+        return view('privacy-policy');
     }
 }
