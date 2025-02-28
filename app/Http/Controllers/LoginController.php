@@ -21,10 +21,9 @@ class LoginController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            dd($user);
             $newUser = User::firstOrCreate(
-                ['email' => $user->getEmail()],
-                ['name' => $user->getName(), 'password' => Hash::make(Str::random(12))]
+                ['facebook_id' => $user->getId()],
+                ['name' => $user->getName(),'email'=>$user->getEmail(), 'password' => Hash::make(Str::random(12))]
             );
             Auth::login($newUser, true);
             return redirect('/home');
