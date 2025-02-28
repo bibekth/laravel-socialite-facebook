@@ -18,8 +18,22 @@ class LoginController extends Controller
     }
 
     public function deleteFbUser(){
-        $user = Socialite::driver('facebook')->user();
-        User::delete($user);
+        try {
+            // Retrieve the Facebook user ID from the authenticated user
+            $fbUser = Socialite::driver('facebook')->user();
+            $user = User::where('facebook_id', $fbUser->id)->first();
+
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
+            // Delete the user record from the database
+            $user->delete();
+
+            return response()->json(['message' => 'User account deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete user', 'error' => $e->getMessage()], 500);
+        }
     }
 
     public function privacyPolicy(){
