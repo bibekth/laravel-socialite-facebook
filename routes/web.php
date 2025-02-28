@@ -10,8 +10,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/facebook-login',[App\Http\Controllers\LoginController::class, 'login'])->name('facebook.login');
-Route::get('/facebook-login-redirect',[App\Http\Controllers\LoginController::class, 'redirect'])->name('facebook.redirect');
+Route::get('/auth/facebook',[App\Http\Controllers\LoginController::class, 'login'])->name('facebook.login');
+Route::get('/auth/facebook/callback',[App\Http\Controllers\LoginController::class, 'redirect'])->name('facebook.redirect');
 Route::get('/privacy-policy',[App\Http\Controllers\LoginController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::post('/facebook-delete-user',[App\Http\Controllers\LoginController::class, 'deleteFbUser'])->name('delete.fb.user');
 Route::get('/users', function(){
