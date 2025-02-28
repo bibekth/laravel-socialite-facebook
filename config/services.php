@@ -44,6 +44,6 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'https://lsf.techenfield.com/facebook-login',
+        'redirect' => env('FACEBOOK_CLIENT_CALLBACK'),
     ],
 ];
