@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
-use Str;
 
 class LoginController extends Controller
 {
@@ -18,7 +17,7 @@ class LoginController extends Controller
         $user = Socialite::driver('facebook')->user();
         $newUser = User::firstOrCreate(
             ['email'=>$user->email],
-            ['name'=>$user->name,'password'=>Hash::make(Str::random(12))]
+            ['name'=>$user->name,'password'=>Hash::make(str_random(12))]
         );
         Auth::login($newUser, true);
         return redirect('/home');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,7 @@ Route::get('/facebook-login',[App\Http\Controllers\LoginController::class, 'logi
 Route::post('/facebook-login',[App\Http\Controllers\LoginController::class, 'redirect'])->name('facebook.redirect');
 Route::get('/privacy-policy',[App\Http\Controllers\LoginController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::post('/facebook-delete-user',[App\Http\Controllers\LoginController::class, 'deleteFbUser'])->name('delete.fb.user');
+Route::get('/users', function(){
+    $users = User::all();
+    return response()->json($users);
+});
