@@ -21,6 +21,7 @@ class LoginController extends Controller
             ['name'=>$user->name,'password'=>Hash::make(Str::random(12))]
         );
         Auth::login($newUser, true);
+        return redirect('/home');
     }
 
     public function deleteFbUser(){
