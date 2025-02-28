@@ -3,27 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
+use Str;
 
 class LoginController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function redirect(){
-        $user = Socialite::driver('facebook')->user();
-        $newUser = User::firstOrCreate(
-            ['email'=>$user->email],
-            ['name'=>$user->name,'password'=>Hash::make(str_random(12))]
-        );
-        Auth::login($newUser, true);
-        return redirect('/home');
+    public function redirect()
+    {
+        try {
+            $user = Socialite::driver('facebook')->user();
+            $newUser = User::firstOrCreate(
+                ['email' => $user->getEmail()],
+                ['name' => $user->getName(), 'password' => Hash::make(Str::random(12))]
+            );
+            Auth::login($newUser, true);
+            return redirect('/home');
+        } catch (Exception $e) {
+            Log::error('Facebook Redirect: ' . $e->getMessage());
+            return redirect('/home');
+        }
     }
 
-    public function deleteFbUser(){
+    public function deleteFbUser()
+    {
         try {
             // Retrieve the Facebook user ID from the authenticated user
             $fbUser = Socialite::driver('facebook')->user();
@@ -42,7 +53,8 @@ class LoginController extends Controller
         }
     }
 
-    public function privacyPolicy(){
+    public function privacyPolicy()
+    {
         return view('privacy-policy');
     }
 }
