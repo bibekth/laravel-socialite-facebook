@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Str;
 
 class LoginController extends Controller
 {
@@ -14,7 +16,11 @@ class LoginController extends Controller
 
     public function redirect(){
         $user = Socialite::driver('facebook')->user();
-        dd($user);
+        $newUser = User::firstOrCreate(
+            ['email'=>$user->email],
+            ['name'=>$user->name,'password'=>Hash::make(Str::random(12))]
+        );
+        Auth::login($newUser, true);
     }
 
     public function deleteFbUser(){
