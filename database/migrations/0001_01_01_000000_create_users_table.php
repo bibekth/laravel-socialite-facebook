@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('facebook_id')->unique();
             $table->string('name');
-            $table->string('email')->unique()->nullable();
+            $table->string('profile_path')->nullable();
+            $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

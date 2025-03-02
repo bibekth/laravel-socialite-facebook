@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Illuminate\Support\Facades\Auth::routes(['register'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/auth/facebook',[App\Http\Controllers\LoginController::class, 'login'])->name('facebook.login');
@@ -18,3 +18,4 @@ Route::get('/users', function(){
     $users = User::all();
     return response()->json($users);
 });
+Route::resource('posts', App\Http\Controllers\PostController::class);

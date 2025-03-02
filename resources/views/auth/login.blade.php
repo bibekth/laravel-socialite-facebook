@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-4 mt-5">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    {{-- <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -64,43 +64,14 @@
                                 @endif
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
                     <form action="{{ route('facebook.login') }}" method="get">
                         @csrf
-                        <button class="btn btn-secondary">Login with facebook</button>
+                        <button class="btn btn-secondary form-control">Login with facebook</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-{{-- <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '9928185007192296',
-      cookie     : true,
-      xfbml      : true,
-      version    : '{api-version}'
-    });
-
-    FB.AppEvents.logPageView();
-
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
-
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
-</script> --}}
 @endsection

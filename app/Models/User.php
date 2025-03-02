@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'facebook_id',
         'name',
+        'profile_path',
         'email',
         'password',
     ];
