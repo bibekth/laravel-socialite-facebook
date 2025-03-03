@@ -16,6 +16,10 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->slug){
+            $post = Post::with(['comments','votes'])->where('slug', $request->slug)->first();
+            return view('showpost',['post'=>$post]);
+        }
         $posts = Post::where('user_id', Auth::id())->get();
         return view('post', ['posts' => $posts]);
     }
@@ -59,8 +63,7 @@ class PostController extends Controller
      */
     public function show(Request $request, Post $post)
     {
-        $post = Post::with(['comments','votes'])->where('slug', $request->slug)->first();
-        return view('showpost',['post'=>$post]);
+       //
     }
 
     /**
