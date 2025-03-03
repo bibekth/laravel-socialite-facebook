@@ -18,4 +18,4 @@ Route::get('/users', function(){
     $users = User::all();
     return response()->json($users);
 });
-Route::resource('posts', App\Http\Controllers\PostController::class);
+Route::resource('posts', App\Http\Controllers\PostController::class)->middleware('auth');
