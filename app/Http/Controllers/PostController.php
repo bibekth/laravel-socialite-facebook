@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -13,10 +14,10 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::get();
-        return view('post',['posts'=>$posts]);
+        $posts = Post::where('user_id', Auth::id())->get();
+        return view('post', ['posts' => $posts]);
     }
 
     /**
@@ -34,23 +35,32 @@ class PostController extends Controller
     {
         $file = File::get($request->banner_image);
         $path = time() . $request->banner_image->getClientOriginalName();
-        $savePath = 'posts/'.$path;
+        $savePath = 'posts/' . $path;
         Storage::disk('public')->put($savePath, $file);
         $post = Post::create([
-            'user_id'=>Auth::id(),
-            'title'=>$request->title,
-            'banner_image'=>$savePath,
-            'description'=>$request->description,
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'banner_image' => $savePath,
+            'description' => $request->description,
         ]);
+        if ($request->option) {
+            foreach ($request->option as $option) {
+                $options = Vote::create([
+                    'post_id' => $post->id,
+                    'option' => $option,
+                ]);
+            }
+        }
         return back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
-        //
+        $post = Post::with(['comments','votes'])->where('slug', $request->slug)->first();
+        return view('showpost',['post'=>$post]);
     }
 
     /**

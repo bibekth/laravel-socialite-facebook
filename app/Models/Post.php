@@ -3,10 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str; 
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'title', 'banner_image', 'likes', 'dislikes','description'];
+    protected $fillable = ['user_id', 'title', 'slug', 'banner_image', 'likes', 'dislikes','description'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($post) {
+            if (empty($post->slug)) {
+                $post->slug = Str::slug($post->title);
+            }
+        });
+    }
 
     public function comments()
     {

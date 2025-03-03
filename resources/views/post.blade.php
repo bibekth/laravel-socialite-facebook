@@ -15,11 +15,12 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <ul>
-                            @foreach($posts as $key => $post)
-                            <li>{{ $post->title }}</li>
-                            @endforeach
-                        </ul>
+                        @foreach($posts as $key => $post)
+                        <form action="{{ route('posts.show',$post->slug) }}" class="form">
+                            <button class="btn btn-primary-outline">{{ $post->title
+                                }}</button>
+                        </form>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -28,11 +29,22 @@
                     <div class="card-body">
                         <div class="create-post">
                             <h1 class="mb-5">Create a Post</h1>
-                            <form action="{{ route('posts.store') }}" method="POST" class="form" enctype="multipart/form-data">
+                            <form action="{{ route('posts.store') }}" method="POST" class="form"
+                                enctype="multipart/form-data">
                                 @csrf
-                                <input type="text" name="title" id="title" placeholder="Title" class="form-control mb-3">
+                                <input type="text" name="title" id="title" placeholder="Title"
+                                    class="form-control mb-3">
                                 <input type="file" name="banner_image" id="banner_image" class="form-control mb-3">
-                                <textarea name="description" id="description" cols="30" rows="10" class="form-control mb-3"></textarea>
+                                <textarea name="description" id="description" cols="30" rows="6"
+                                    class="form-control mb-3"></textarea>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="display-6 mb-3 mt-2">Options</span>
+                                    <span id="add_option" style="cursor: pointer;">Add</span>
+                                </div>
+                                <div id="option_container">
+                                    <input type="text" name="option[]" id="option_1" class="form-control mb-3"
+                                        placeholder="Option 1">
+                                </div>
                                 <button class="btn btn-primary form-control">Submit</button>
                             </form>
                         </div>
@@ -46,6 +58,22 @@
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+<script>
+    let optionCount = 1;
+    document.getElementById("add_option").addEventListener("click", function () {
+        optionCount++;
+        let optionContainer = document.getElementById("option_container");
+        let newInput = document.createElement("input");
+
+        newInput.type = "text";
+        newInput.name = "option[]"; // Using array notation to collect multiple options
+        newInput.id = "option_" + optionCount;
+        newInput.className = "form-control mb-3";
+        newInput.placeholder = "Option " + optionCount;
+
+        optionContainer.appendChild(newInput);
+    });
 </script>
 
 </html>

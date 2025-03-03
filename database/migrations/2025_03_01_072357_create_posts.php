@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('title');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade')->index();
+            $table->string('title')->unique();
+            $table->string('slug')->unique()->index();
             $table->string('banner_image')->nullable();
             $table->unsignedBigInteger('likes')->default(0);
             $table->unsignedBigInteger('dislikes')->default(0);
