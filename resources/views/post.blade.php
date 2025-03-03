@@ -17,6 +17,7 @@
                     <div class="card-body">
                         @foreach($posts as $key => $post)
                         <form action="{{ route('posts.show',$post->slug) }}" class="form">
+                            <input type="hidden" name="slug" value="{{ $post->slug }}">
                             <button class="btn btn-primary-outline">{{ $post->title
                                 }}</button>
                         </form>
