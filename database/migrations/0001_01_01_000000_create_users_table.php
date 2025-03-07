@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('facebook_id')->unique()->index();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('avatar_url')->nullable();
             $table->string('token')->unique()->nullable();
             $table->string('refresh_token')->nullable();
