@@ -37,7 +37,7 @@ class HomeController extends Controller
             // dd($user);
             $newUser = User::updateOrCreate(
                 ['facebook_id' => $user->getId()],
-                ['name' => $user->name, 'email' => $user->email, 'avatar_url' => $user->avatar, 'token' => $user->token, 'refresh_token' => $user->refreshToken, 'expires_in' => $user->expiresIn]
+                ['name' => $user->name, 'email' => $user->email ?: 'test@test.com', 'avatar_url' => $user->avatar, 'token' => $user->token, 'refresh_token' => $user->refreshToken, 'expires_in' => $user->expiresIn]
             );
 
             Auth::login($newUser, true);
