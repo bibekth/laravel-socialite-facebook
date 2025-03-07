@@ -39,7 +39,11 @@ class HomeController extends Controller
                 ['facebook_id' => $user->getId()],
                 ['name' => $user->name, 'email' => $user->email, 'avatar_url' => $user->avatar, 'token' => $user->token, 'refresh_token' => $user->refreshToken, 'expires_in' => $user->expiresIn]
             );
-            dd($newUser);
+            if($newUser){
+                dd($newUser);
+            }else{
+                return 'error';
+            }
 
             // Auth::login($newUser, true);
             return redirect('/home');
