@@ -13,28 +13,33 @@ use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function logout(){
+    public function logout()
+    {
         $user = Auth::user();
         Auth::logout($user);
         return redirect('/');
     }
 
-    public function loginFacebook(){
+    public function loginFacebook()
+    {
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function redirect(){
+    public function redirect()
+    {
         try {
             $user = Socialite::driver('facebook')->user();
-            dd($user);
-            // $newUser = User::firstOrCreate(
-            //     ['facebook_id' => $user->getId()],
-            //     ['name' => $user->getName(),'email'=>$user->getEmail()]
-            // );
+            $newUser = User::updateOrCreate(
+                ['facebook_id' => $user->getId()],
+                ['name' => $user->getName(), 'email' => $user->getEmail(), 'avatar_url' => $user->getAvatar(), 'token'=>$user->getToken(),'refresh_token'=>$user->getRefreshToken(),'expires_in'=>$user->getExpiresIn()]
+            );
+            dd($newUser);
+
             // Auth::login($newUser, true);
             return redirect('/home');
         } catch (Exception $e) {

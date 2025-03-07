@@ -19,9 +19,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'facebook_id',
         'name',
         'email',
-        'password',
+        'avatar_url',
+        'token',
+        'refresh_token',
+        'expires_in',
     ];
 
     /**
@@ -30,8 +34,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        // 'password',
+        // 'remember_token',
+        'token',
+        'refresh_token'
     ];
 
     /**
@@ -56,5 +62,9 @@ class User extends Authenticatable
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
     }
 }

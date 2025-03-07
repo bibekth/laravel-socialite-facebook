@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('avatar_url')->nullable();
+            $table->string('token')->unique()->nullable();
+            $table->string('refresh_token')->nullable();
+            $table->string('expires_in')->nullable();
             $table->timestamps();
         });
 
