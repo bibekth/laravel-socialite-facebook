@@ -36,7 +36,7 @@
         <!-- Desktop User Menu -->
         <flux:dropdown position="bottom" align="start">
             <flux:profile :name="auth()->user()->name"
-                avatar="'https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}'"
+                src="'https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}'"
                 icon-trailing="chevrons-up-down" />
 
 
