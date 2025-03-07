@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return redirect('/login');
 });
 
-Illuminate\Support\Facades\Auth::routes(['register'=>false]);
+// Illuminate\Support\Facades\Auth::routes(['register'=>false]);
+Route::get('/login', [LoginController::class,'login'] )->name('login');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/auth/facebook',[App\Http\Controllers\LoginController::class, 'login'])->name('facebook.login');

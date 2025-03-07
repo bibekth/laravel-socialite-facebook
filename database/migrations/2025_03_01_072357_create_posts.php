@@ -27,6 +27,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
             $table->text('comment');
+            $table->unsignedBigInteger('likes')->default(0);
+            $table->unsignedBigInteger('dislikes')->default(0);
             $table->timestamps();
         });
 
