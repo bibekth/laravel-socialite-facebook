@@ -9,8 +9,9 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Illuminate\Support\Facades\Auth::routes(['login'=>false,'register'=>false]);
+// Illuminate\Support\Facades\Auth::routes(['login'=>false,'register'=>false]);
 Route::get('/login', [LoginController::class,'login'] )->name('login');
+Route::get('/logout', [LoginController::class,'logout'] )->name('logout');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -53,6 +53,11 @@ class LoginController extends Controller
         }
     }
 
+    public function logout(){
+        Auth::logout(Auth::user());
+        return 'Logged OUT';
+    }
+
     public function privacyPolicy()
     {
         return view('privacy-policy');
