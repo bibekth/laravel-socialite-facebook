@@ -35,8 +35,11 @@
 
         <!-- Desktop User Menu -->
         <flux:dropdown position="bottom" align="start">
-            <flux:profile :name="auth()->user()->name" :initials="auth()->user()->avatar_url"
-                icon-trailing="chevrons-up-down" />
+            <flux:profile
+            :name="auth()->user()->name"
+            :initials="null" 
+            :image="'https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}'"
+            icon-trailing="chevrons-up-down" />
 
             <flux:menu class="w-[220px]">
                 <flux:menu.radio.group>
