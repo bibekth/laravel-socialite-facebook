@@ -1,5 +1,6 @@
 <x-layouts.app title="Dashboard">
-    <flux:menu.radio.group>
+    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+        <flux:menu.radio.group>
         <div class="p-0 text-sm font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
@@ -16,7 +17,10 @@
             </div>
         </div>
     </flux:menu.radio.group>
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+
+    <form wire:submit="savePost">
+        <flux:input wire:model="title" label="Title" description="The title of the post." />
+    </form>
         {{-- <div class="grid auto-rows-min gap-4 md:grid-cols-3">
             <div
                 class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
