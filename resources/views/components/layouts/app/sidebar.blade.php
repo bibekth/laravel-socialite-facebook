@@ -35,8 +35,14 @@
 
         <!-- Desktop User Menu -->
         <flux:dropdown position="bottom" align="start">
+            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                <span
+                    class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                    <img src="https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}"
+                        alt="">
+                </span>
+            </span>
             <flux:profile :name="auth()->user()->name" :initials="null"
-                :image="'https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}'"
                 icon-trailing="chevrons-up-down" />
 
             <flux:menu class="w-[220px]">
@@ -61,12 +67,12 @@
 
                 <flux:menu.separator />
 
-                <flux:menu.radio.group>
+                {{-- <flux:menu.radio.group>
                     <flux:menu.item href="/settings/profile" icon="cog" wire:navigate>{{ __('Settings') }}
                     </flux:menu.item>
                 </flux:menu.radio.group>
 
-                <flux:menu.separator />
+                <flux:menu.separator /> --}}
 
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
