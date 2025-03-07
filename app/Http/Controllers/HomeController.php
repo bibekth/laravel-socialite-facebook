@@ -34,19 +34,13 @@ class HomeController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            // dd([$user, $user->name, $user->email, $user->avatar, $user->token, $user->refresh_token, $user->expires_in]);
             $newUser = User::updateOrCreate(
                 ['facebook_id' => $user->getId()],
                 ['name' => $user->name, 'email' => $user->email, 'avatar_url' => $user->avatar, 'token' => $user->token, 'refresh_token' => $user->refreshToken, 'expires_in' => $user->expiresIn]
             );
-            if($newUser){
-                dd($newUser);
-            }else{
-                return 'error';
-            }
 
-            // Auth::login($newUser, true);
-            return redirect('/home');
+            Auth::login($newUser, true);
+            return redirect(route('dashboard'));
         } catch (Exception $e) {
             Log::error('Facebook Redirect: ' . $e->getMessage());
             return redirect(route('home'));
