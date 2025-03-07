@@ -35,11 +35,10 @@
 
         <!-- Desktop User Menu -->
         <flux:dropdown position="bottom" align="start">
-            <flux:profile
-            :name="auth()->user()->name"
-            :initials="null" 
-            :image="'https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}'"
-            icon-trailing="chevrons-up-down" />
+            <flux:profile :name="auth()->user()->name"
+                avatar="'https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}'"
+                icon-trailing="chevrons-up-down" />
+
 
             <flux:menu class="w-[220px]">
                 <flux:menu.radio.group>
@@ -48,7 +47,8 @@
                             <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
                                 <span
                                     class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                    <img src="https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}" alt="">
+                                    <img src="https://graph.facebook.com/v18.0/me/picture?type=large&access_token={{ auth()->user()->token }}"
+                                        alt="">
                                 </span>
                             </span>
 
