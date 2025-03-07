@@ -34,7 +34,7 @@ class HomeController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            dd($user->name);
+            // dd($user->name);
             $newUser = User::updateOrCreate(
                 ['facebook_id' => $user->getId()],
                 ['name' => $user->name, 'email' => $user->email, 'avatar_url' => $user->avatar, 'token'=>$user->token,'refresh_token'=>$user->refresh_token,'expires_in'=>$user->expires_in]
