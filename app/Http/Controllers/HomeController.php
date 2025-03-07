@@ -33,7 +33,10 @@ class HomeController extends Controller
     public function redirect()
     {
         try {
-            $user = Socialite::driver('facebook')->user();
+            $user = Socialite::driver('facebook')->scopes([
+                'public_profile',
+                'email',
+            ])->user();
             dd($user);
             $newUser = User::updateOrCreate(
                 ['facebook_id' => $user->getId()],
