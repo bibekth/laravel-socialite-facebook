@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('facebook_id')->unique()->index();
-            $table->string('name');
+            $table->string('facebook_id')->nullable()->unique()->index();
+            $table->string('name')->nullable();
             $table->string('email')->nullable();
+            $table->string('password')->nullable();
             $table->string('avatar_url')->nullable();
             $table->string('token')->unique()->nullable();
             $table->string('refresh_token')->nullable();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade')->index();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('slug')->unique()->index();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('likes')->default(0);
@@ -25,6 +25,7 @@ return new class extends Migration
 
         Schema::create('comments', function (Blueprint $table){
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade')->index();
             $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade')->index();
             $table->text('comment');
             $table->unsignedBigInteger('likes')->default(0);
@@ -34,10 +35,26 @@ return new class extends Migration
 
         Schema::create('post_options', function(Blueprint $table){
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade')->index();
             $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade')->index();
             $table->string('option');
             $table->unsignedBigInteger('counts')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('track_votes', function(Blueprint $table){
+            $table->id();
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('post_option_id')->constrained()->onDelete('cascade');
+            $table->unique(['user_id', 'post_id']);
+            $table->timestamps();
+        });
+
+        Schema::create('track_comments', function(Blueprint $table){
+            $table->id();
+            $table->foreignId('comment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->tinyInteger('liked');
             $table->timestamps();
         });
     }
@@ -47,6 +64,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('track_votes');
         Schema::dropIfExists('post_options');
         Schema::dropIfExists('comments');
         Schema::dropIfExists('posts');

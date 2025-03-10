@@ -15,8 +15,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/delete/facebook/callback', [App\Http\Controllers\HomeController::class, 'deleteFbUser'])->name('delete.fb.user');
 
 
-    // Volt::route('register', 'auth.register')
-    //     ->name('register');
+    Volt::route('register', 'auth.register')
+        ->name('register');
 
     // Volt::route('forgot-password', 'auth.forgot-password')
     //     ->name('password.request');

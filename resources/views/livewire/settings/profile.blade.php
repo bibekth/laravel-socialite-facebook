@@ -68,7 +68,7 @@ new class extends Component {
         Session::flash('status', 'verification-link-sent');
     }
 }; ?>
-
+@if(auth()->user()->facebook_id == null)
 <section class="w-full">
     @include('partials.settings-heading')
 
@@ -112,3 +112,4 @@ new class extends Component {
         <livewire:settings.delete-user-form />
     </x-settings.layout>
 </section>
+@endif

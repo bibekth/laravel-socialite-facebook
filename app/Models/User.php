@@ -22,6 +22,7 @@ class User extends Authenticatable
         'facebook_id',
         'name',
         'email',
+        'password',
         'avatar_url',
         'token',
         'refresh_token',
