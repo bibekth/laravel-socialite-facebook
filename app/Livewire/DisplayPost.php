@@ -114,7 +114,7 @@ class DisplayPost extends Component
                 // Decrement the dislike count
                 DB::table('comments')->where('id', $userInteracted->comment_id)->decrement('dislikes');
                 // Update the like status to 1 (like)
-                DB::table('comments')->where('id', $commentId)->update(['liked' => 1]);
+                // DB::table('comments')->where('id', $commentId)->update(['liked' => 1]);
                 // Update the user's interaction
                 DB::table('track_comments')->where('id', $userInteracted->id)->update(['liked' => 1]);
             }
