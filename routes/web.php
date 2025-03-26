@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\HomeController;
 use App\Livewire\DisplayPost;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
+    if(Auth::user()){
+        return redirect(route('dashboard'));
+    }
     return view('welcome');
 })->name('home');
 
@@ -14,8 +18,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/facebook/callback', [App\Http\Controllers\HomeController::class, 'redirect'])->name('facebook.redirect');
     Route::get('/privacy-policy', [App\Http\Controllers\HomeController::class, 'privacyPolicy'])->name('privacy.policy');
     Route::post('/delete/facebook/callback', [App\Http\Controllers\HomeController::class, 'deleteFbUser'])->name('delete.fb.user');
-    Volt::route('register', 'auth.register')
-        ->name('register');
+    // Volt::route('register', 'auth.register')
+    //     ->name('register');
 });
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 
