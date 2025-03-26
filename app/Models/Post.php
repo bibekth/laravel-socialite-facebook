@@ -58,11 +58,11 @@ class Post extends Model
 
     public function topComments()
     {
-        return Comment::orderBy('likes','desc')->orderBy('dislikes', 'asc') ->get();
+        return Comment::where('post_id',$this->id)->orderBy('likes','desc')->orderBy('dislikes', 'asc') ->get();
     }
 
     public function newComments()
     {
-        return Comment::orderBy('created_at','desc')->get();
+        return Comment::where('post_id',$this->id)->orderBy('created_at','desc')->get();
     }
 }

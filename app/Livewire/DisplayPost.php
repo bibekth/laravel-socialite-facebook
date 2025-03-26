@@ -40,7 +40,7 @@ class DisplayPost extends Component
                     ->where('user_id', $userId)
                     ->delete();
                 optional(PostOption::find($existingVote->post_option_id))->decrement('counts');
-
+                $this->totalCount = $this->post->options->sum('counts');
                 return;
             }
 
