@@ -98,7 +98,7 @@ class DisplayPost extends Component
     {
         // Check if the user has interacted with the comment
         $userInteracted = DB::table('track_comments')
-            ->where(['comment_id' => $commentId, 'user_id' => auth()->id()])
+            ->where(['comment_id' => $commentId, 'user_id' => Auth::id()])
             ->first();
 
         if ($userInteracted) {
@@ -114,14 +114,14 @@ class DisplayPost extends Component
                 // Decrement the dislike count
                 DB::table('comments')->where('id', $userInteracted->comment_id)->decrement('dislikes');
                 // Update the like status to 1 (like)
-                // DB::table('comments')->where('id', $commentId)->update(['liked' => 1]);
+                DB::table('comments')->where('id', $commentId)->update(['liked' => 1]);
                 // Update the user's interaction
                 DB::table('track_comments')->where('id', $userInteracted->id)->update(['liked' => 1]);
             }
         } else {
             // Insert a new like record
             DB::table('track_comments')->insert([
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'comment_id' => $commentId,
                 'liked' => 1,
                 'created_at' => now(),
@@ -137,7 +137,7 @@ class DisplayPost extends Component
     {
         // Check if the user has interacted with the comment
         $userInteracted = DB::table('track_comments')
-            ->where(['comment_id' => $commentId, 'user_id' => auth()->id()])
+            ->where(['comment_id' => $commentId, 'user_id' => Auth::id()])
             ->first();
 
         if ($userInteracted) {
@@ -153,14 +153,14 @@ class DisplayPost extends Component
                 // Decrement the like count
                 DB::table('comments')->where('id', $userInteracted->comment_id)->decrement('likes');
                 // Update the like status to 0 (dislike)
-                // DB::table('comments')->where('id', $commentId)->update(['liked' => 0]);
+                DB::table('comments')->where('id', $commentId)->update(['liked' => 0]);
                 // Update the user's interaction
                 DB::table('track_comments')->where('id', $userInteracted->id)->update(['liked' => 0]);
             }
         } else {
             // Insert a new dislike record
             DB::table('track_comments')->insert([
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'comment_id' => $commentId,
                 'liked' => 0,
                 'created_at' => now(),
