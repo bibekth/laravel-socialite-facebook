@@ -113,6 +113,7 @@ class DisplayPost extends Component
             elseif ($userInteracted->liked == 0) {
                 // Decrement the dislike count
                 DB::table('comments')->where('id', $userInteracted->comment_id)->decrement('dislikes');
+                DB::table('comments')->where('id', $userInteracted->comment_id)->increment('likes');
                 // Update the like status to 1 (like)
                 // DB::table('comments')->where('id', $commentId)->update(['liked' => 1]);
                 // Update the user's interaction
@@ -152,6 +153,7 @@ class DisplayPost extends Component
             elseif ($userInteracted->liked == 1) {
                 // Decrement the like count
                 DB::table('comments')->where('id', $userInteracted->comment_id)->decrement('likes');
+                DB::table('comments')->where('id', $userInteracted->comment_id)->increment('dislikes');
                 // Update the like status to 0 (dislike)
                 // DB::table('comments')->where('id', $commentId)->update(['liked' => 0]);
                 // Update the user's interaction
