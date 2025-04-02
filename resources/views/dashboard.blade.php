@@ -66,6 +66,10 @@
             unset($this->options[$index]);
             $this->options = array_values($this->options); // Re-index array
         }
+
+        public function deletePost($postId){
+            Post::destroy($postId);
+        }
     };
 ?>
 <x-layouts.app title="Dashboard">
@@ -161,9 +165,34 @@
                 <flux:heading size="xl">Your Posts</flux:heading>
                 <flux:subheading>List of the posts that you have created.</flux:subheading>
             </div>
-            @foreach(auth()->user()->posts as $post)
-                <div class=""><a href="{{ asset($post->slug) }}" target="_blank" rel="noopener noreferrer">{{ $loop->iteration }} . {{ $post->title }}</a></div>
-            @endforeach
+            <table>
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(auth()->user()->posts as $post)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td><a href="{{ asset($post->slug) }}" target="_blank" rel="noopener noreferrer">{{ $post->title
+                                }}</a></td>
+                        <td>
+                            <button class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400" type="button" wire:click="deletePost({{ $post->id }})">DELETE</button>
+                        </td>
+                    </tr>
+                    {{-- <div class=""><a href="{{ asset($post->slug) }}" target="_blank" rel="noopener noreferrer">{{
+                            $loop->iteration }} . {{ $post->title }}</a></div> --}}
+                    @endforeach
+
+                </tbody>
+            </table>
+            {{-- @foreach(auth()->user()->posts as $post)
+            <div class=""><a href="{{ asset($post->slug) }}" target="_blank" rel="noopener noreferrer">{{
+                    $loop->iteration }} . {{ $post->title }}</a></div>
+            @endforeach --}}
         </div>
     </div>
     @endvolt
