@@ -165,7 +165,7 @@
                 <flux:heading size="xl">Your Posts</flux:heading>
                 <flux:subheading>List of the posts that you have created.</flux:subheading>
             </div>
-            @if(count(auth()->user()->posts) > 0)
+            {{-- @if(count(auth()->user()->posts) > 0) --}}
             <table>
                 <thead>
                     <tr>
@@ -190,7 +190,7 @@
 
                 </tbody>
             </table>
-            @endif
+            {{-- @endif --}}
         </div>
     </div>
     @endvolt
