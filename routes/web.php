@@ -48,7 +48,7 @@ Route::post('/github/webhooks', function () {
         }
 
         $data = json_decode($payload, true);
-        if ($data["ref"] === "refs/head/new") {
+        if ($data["ref"] === "refs/heads/new") {
             exec("cd ~/public_html/lsf && git pull origin new 2>&1", $output, $returnCode);
             file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
         }
