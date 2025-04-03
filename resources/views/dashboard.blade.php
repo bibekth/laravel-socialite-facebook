@@ -165,7 +165,7 @@
                 <flux:heading size="xl">Your Posts</flux:heading>
                 <flux:subheading>List of the posts that you have created.</flux:subheading>
             </div>
-            @if(count(auth()->user()->posts) > 0)
+            {{-- @if(count(auth()->user()->posts) > 0) --}}
             <table>
                 <thead>
                     <tr>
@@ -190,11 +190,7 @@
 
                 </tbody>
             </table>
-            @endif
-            {{-- @foreach(auth()->user()->posts as $post)
-            <div class=""><a href="{{ asset($post->slug) }}" target="_blank" rel="noopener noreferrer">{{
-                    $loop->iteration }} . {{ $post->title }}</a></div>
-            @endforeach --}}
+            {{-- @endif --}}
         </div>
     </div>
     @endvolt
