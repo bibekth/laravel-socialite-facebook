@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-Route::get('/github/webhooks', function(){
+Route::post('/github/webhooks', function(){
     $secret = "monkey@21";
     $payload = file_get_contents("php://input");
     $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
