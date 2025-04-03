@@ -36,4 +36,20 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
+Route::get('/github/webhooks', function(){
+    $secret = "monkey@21";
+    $payload = file_get_contents("php://input");
+    $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
+    $hash = "sha256=" . hash_hmac("sha256", $payload, $secret);
+    if(!hash_equals($hash, $signature)){
+        http_response_code(403);
+        exit("Invalid Signature");
+    }
+
+    $data = json_decode($payload, true);
+    if($data["ref"] === "refs/head/new"){
+        exec("cd ~/public_html/lsf && git pull origin new 2>&1", $output, $returnCode);
+        file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
+    }
+});
 // require __DIR__ . '/auth.php';
