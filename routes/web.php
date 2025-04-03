@@ -40,6 +40,7 @@ Route::post('/github/webhooks', function () {
     try {
         $secret = "monkey@21";
         $payload = file_get_contents("php://input");
+        file_put_contents("webhook_request.log", $payload, FILE_APPEND);
         $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
         $hash = "sha256=" . hash_hmac("sha256", $payload, $secret);
         if (!hash_equals($hash, $signature)) {
