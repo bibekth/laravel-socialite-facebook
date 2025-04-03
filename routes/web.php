@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
-    if(Auth::user()){
+    if (Auth::user()) {
         return redirect(route('dashboard'));
     }
     return view('welcome');
@@ -36,20 +36,25 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-Route::post('/github/webhooks', function(){
-    $secret = "monkey@21";
-    $payload = file_get_contents("php://input");
-    $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
-    $hash = "sha256=" . hash_hmac("sha256", $payload, $secret);
-    if(!hash_equals($hash, $signature)){
-        http_response_code(403);
-        exit("Invalid Signature");
-    }
+Route::post('/github/webhooks', function () {
+    try {
+        $secret = "monkey@21";
+        $payload = file_get_contents("php://input");
+        $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
+        $hash = "sha256=" . hash_hmac("sha256", $payload, $secret);
+        if (!hash_equals($hash, $signature)) {
+            http_response_code(403);
+            exit("Invalid Signature");
+        }
 
-    $data = json_decode($payload, true);
-    if($data["ref"] === "refs/head/new"){
-        exec("cd ~/public_html/lsf && git pull origin new 2>&1", $output, $returnCode);
-        file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
+        $data = json_decode($payload, true);
+        if ($data["ref"] === "refs/head/new") {
+            exec("cd ~/public_html/lsf && git pull origin new 2>&1", $output, $returnCode);
+            file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
+        }
+        return response()->json('success', 200);
+    } catch (Exception $e) {
+        return response()->json($e->getMessage(), 500);
     }
 });
 // require __DIR__ . '/auth.php';
