@@ -40,7 +40,7 @@ Route::post('/github/webhooks', function () {
     try {
         $secret = "monkey@21";
         $payload = file_get_contents("php://input");
-        file_put_contents("webhook_request.log", $payload, FILE_APPEND);
+        // file_put_contents("webhook_request.log", $payload, FILE_APPEND);
         $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
         $hash = "sha256=" . hash_hmac("sha256", $payload, $secret);
         if (!hash_equals($hash, $signature)) {
@@ -50,7 +50,7 @@ Route::post('/github/webhooks', function () {
 
         $data = json_decode($payload, true);
         if ($data["ref"] === "refs/heads/new") {
-            exec("cd ~/public_html/laravel-socialite-facebook && git pull origin new 2>&1", $output, $returnCode);
+            exec("cd ~/public_html/lsf && git pull origin new 2>&1", $output, $returnCode);
             file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
         }
         return response()->json('success', 200);
